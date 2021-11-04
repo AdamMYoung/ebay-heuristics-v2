@@ -25,6 +25,7 @@ const AuthProvider: FC = ({ children }) => {
 
 	const getAuthToken = async (consentToken: string) => {
 		setLoading(true);
+
 		const token = await ebayApi.mintToken(consentToken);
 		authUtils.setToken(token);
 

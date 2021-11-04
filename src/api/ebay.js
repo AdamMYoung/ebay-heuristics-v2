@@ -20,9 +20,7 @@ export const mintToken = async (consentToken) => {
 	return await axios
 		.post(
 			process.env.REACT_APP_EBAY_MINT_URL,
-
 			`grant_type=authorization_code&code=${consentToken}&redirect_uri=${process.env.REACT_APP_EBAY_REDIRECT_URI}`,
-
 			{
 				headers: {
 					Authorization: 'Basic ' + process.env.REACT_APP_EBAY_OAUTH_CREDS,

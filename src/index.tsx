@@ -8,15 +8,29 @@ import AuthProvider from './providers/AuthProvider';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			refetchOnMount: false,
+			refetchOnReconnect: false,
+			refetchIntervalInBackground: false
+		}
+	}
+});
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<ChakraProvider>
-				<AuthProvider>
-					<Routes />
-				</AuthProvider>
-			</ChakraProvider>
+			<QueryClientProvider client={queryClient}>
+				<ChakraProvider>
+					<AuthProvider>
+						<Routes />
+					</AuthProvider>
+				</ChakraProvider>
+			</QueryClientProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
