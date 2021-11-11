@@ -4,9 +4,11 @@ import { useEffect, useRef } from 'react';
 import { Navigation } from '../components';
 
 import 'leaflet/dist/leaflet.css';
+import { eBay, useAuth } from '../providers/AuthProvider';
 
 export const Home = () => {
 	const mapRef = useRef(null);
+	const { isAuthenticated } = useAuth();
 
 	useEffect(() => {
 		if (!mapRef.current) {
@@ -26,6 +28,14 @@ export const Home = () => {
 			}
 		).addTo(map);
 	}, []);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			eBay.sell.fulfillment.getOrders().then((res) => {
+				console.log(res);
+			});
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<Box position="relative">

@@ -4,17 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 export const Callback = () => {
 	const navigate = useNavigate();
-	const { onSignIn } = useAuth();
+	const { codeCallback } = useAuth();
 
 	useEffect(() => {
 		const queryString = window.location.search;
-		const start = queryString.indexOf('code=');
-		const end = queryString.indexOf('&');
+		const searchParams = new URLSearchParams(queryString);
 
-		const code = queryString.substring(start, end);
-		onSignIn(code);
+		codeCallback(searchParams.get('code') ?? '');
 		navigate('/');
-	}, [onSignIn, navigate]);
+	}, [codeCallback, navigate]);
 
 	return null;
 };

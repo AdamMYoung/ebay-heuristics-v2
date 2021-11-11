@@ -1,43 +1,68 @@
 import React, { FC, useContext, useState } from 'react';
-import * as ebayApi from '../api/ebay';
-import * as authUtils from '../utils/authUtils';
+import eBayApi from '@hendt/ebay-api';
+
+export const eBay = new eBayApi({
+	appId: process.env.REACT_APP_EBAY_ID ?? '',
+	certId: process.env.REACT_APP_EBAY_SECRET ?? '',
+	ruName: `https://${window.location.hostname}/success`,
+	sandbox: false,
+	siteId: eBayApi.SiteId.EBAY_GB,
+	marketplaceId: eBayApi.MarketplaceId.EBAY_GB
+});
+
+eBay.OAuth2.setScope([
+	'https://api.ebay.com/oauth/api_scope',
+	'https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly',
+	'https://api.ebay.com/oauth/api_scope/sell.fulfillment'
+]);
+
+// eBay.req.instance is AxiosInstance per default
+eBay.req.instance.interceptors.request.use((request) => {
+	// Add Proxy
+	request.url = 'https://ebay.hendt.workers.dev/' + request.url;
+	return request;
+});
 
 type AuthenticationContextOptions = {
 	isAuthenticated: boolean;
-	isLoading: boolean;
-	authToken: unknown;
-	onSignIn: (consentToken: string) => void;
+	login: () => void;
+	codeCallback: (code: string) => void;
 };
 
 export const AuthenticationContext =
 	React.createContext<AuthenticationContextOptions>({
 		isAuthenticated: false,
-		isLoading: false,
-		authToken: null,
-		onSignIn: (consentToken: string) => {}
+		login: () => {},
+		codeCallback: () => {}
 	});
 
 export const useAuth = () => useContext(AuthenticationContext);
 
 const AuthProvider: FC = ({ children }) => {
-	const [authToken, setAuthToken] = useState(authUtils.getToken());
-	const [isLoading, setLoading] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-	const getAuthToken = async (consentToken: string) => {
-		setLoading(true);
+	const handleLogin = async () => {
+		const url = eBay.OAuth2.generateAuthUrl();
+		if (window.location) {
+			window.location.href = url;
+		}
+	};
 
-		const token = await ebayApi.mintToken(consentToken);
-		authUtils.setToken(token);
+	const handleCodeCallback = async (code: string) => {
+		try {
+			const token = await eBay.OAuth2.getToken(code);
+			eBay.OAuth2.setCredentials(token);
 
-		setAuthToken(authUtils.getToken());
-		setLoading(false);
+			setIsAuthenticated(true);
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	const authStatus = {
-		isAuthenticated: !!authToken,
-		authToken,
-		isLoading,
-		onSignIn: (consentToken: string) => getAuthToken(consentToken)
+		isAuthenticated,
+		login: handleLogin,
+		codeCallback: handleCodeCallback
 	};
 
 	return (
