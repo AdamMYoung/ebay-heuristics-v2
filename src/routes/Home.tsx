@@ -31,6 +31,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
+			console.log(eBay.sell.fulfillment);
 			eBay.sell.fulfillment.getOrders().then((res) => {
 				console.log(res);
 			});
