@@ -6,7 +6,7 @@
 		"@chakra-ui/react": "^1.6.12",
 		"@emotion/react": "^11",
 		"@emotion/styled": "^11",
-		"@hendt/ebay-api": "^5.0.0",
+		"@hendt/ebay-api": "^5.0.2",
 		"@netlify/functions": "^0.8.0",
 		"@testing-library/jest-dom": "^5.11.4",
 		"@testing-library/react": "^11.1.0",

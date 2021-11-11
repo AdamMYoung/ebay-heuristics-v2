@@ -1876,10 +1876,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hendt/ebay-api@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@hendt/ebay-api/-/ebay-api-5.0.0.tgz#ed1d31584df8235d90fba2d3f9d4ebc6a1a64aa4"
-  integrity sha512-nAfxSLWKYUE0uE817UhP6u21DaqgMSMHzQ8e2w/6E+pDZvmuU+gYjd6O/K1HuyQTuE9seXDi+kPJ8aaialB4UA==
+"@hendt/ebay-api@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@hendt/ebay-api/-/ebay-api-5.0.2.tgz#5aef4d4304766194ef02c4fb118e79a8fa4e1a53"
+  integrity sha512-xIojh7dVTlJ3gfzV600WKwHZwq6HW3GsX78WcN79KW8VyxSvLU0vqHVUlNyoMbGyl5voY23jvqevjeM8E8vteg==
   dependencies:
     axios "^0.21.4"
     debug "^2.1.1"
