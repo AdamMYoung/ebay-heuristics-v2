@@ -1,4 +1,4 @@
-import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode, Divider } from '@chakra-ui/react';
+import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode, Divider, Box } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
 
 import { useEbay } from '../providers/EbayProvider';
@@ -53,7 +53,9 @@ export const Navigation = () => {
 				<Text>Earned <b>£${amountEarned}</b></Text>
 				<Divider />
 				<Text>Breakdown:</Text>
-				{Object.keys(groupedItems).map(key => <Text>Sold ${groupedItems[key]} of ${key}</Text>)}
+				<Box maxH="64" overflow="none" overflowY="auto">
+					{Object.keys(groupedItems).map(key => <Text>Sold ${groupedItems[key]} of ${key}</Text>)}
+				</Box>
 			</Stack>}
 			<Button onClick={() => setHideDetails(visible => !visible)}>{hideDetails ? "Show" : "Hide"} details</Button>
 		</Stack>
