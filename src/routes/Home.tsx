@@ -41,7 +41,7 @@ export const Home = () => {
 		if (!isLoading) {
 			orders.forEach(listing => {
 				const marker = L.marker([listing.lat, listing.lng]).addTo(mapRef.current! as L.Map);
-				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${listing.date.toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
+				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${new Date(listing.date).toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
 			})
 		}
 	}, [orders, isLoading])
