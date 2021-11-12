@@ -1,4 +1,4 @@
-import { Stack, Heading, Button, Checkbox } from '@chakra-ui/react';
+import { Stack, Heading, Button } from '@chakra-ui/react';
 import { useEbay } from '../providers/EbayProvider';
 
 export const Navigation = () => {

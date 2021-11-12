@@ -13,11 +13,11 @@ export type OrderListing = {
 
 const getOrders = async (ebay: eBayApi, skip: number = 0) => {
     return await ebay.sell.fulfillment.getOrders({ limit: BATCH_SIZE, offset: skip }).then((res) => {
-        const listings: OrderListing[] = res.orders.map((order) => ({
+        const listings: OrderListing[] = res.orders.map((order: any) => ({
             postalCode: order.fulfillmentStartInstructions[0].finalDestinationAddress.postalCode,
             username: order.buyer.username,
             date: order.creationDate,
-            itemsOrdered: order.lineItems.map((item) => item.title)
+            itemsOrdered: order.lineItems.map((item: any) => item.title)
         }));
 
         return { hasMore: !!res.next, listings };
@@ -44,7 +44,7 @@ export const useOrderListings = () => {
                     hasMore = hasMoreOrders;
                 }
 
-                return orders
+                setOrders(orders)
             }
         }
         exec()
