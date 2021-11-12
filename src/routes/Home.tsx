@@ -42,7 +42,7 @@ export const Home = () => {
 	 */
 	useEffect(() => {
 		if (!isLoading) {
-			(markerRef.current as L.Layer[]).forEach(marker => mapRef.current!.removeLayer(marker))
+			(markerRef.current as L.Layer[])?.forEach(marker => mapRef.current!.removeLayer(marker))
 
 			const markers: L.Layer[] = []
 

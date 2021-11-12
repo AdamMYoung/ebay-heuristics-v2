@@ -1,4 +1,5 @@
 import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode } from '@chakra-ui/react';
+
 import { useEbay } from '../providers/EbayProvider';
 import { useOrders } from '../providers/OrderProvider';
 
@@ -22,8 +23,6 @@ export const Navigation = () => {
 
 			{isAuthenticated && isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
 			{isAuthenticated && !isLoading && <Text>Loaded {orders.length} orders</Text>}
-
-
 		</Stack>
 	);
 };
