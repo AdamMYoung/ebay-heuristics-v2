@@ -2,13 +2,12 @@ import { Box } from '@chakra-ui/react';
 import * as L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { Navigation } from '../components';
+import { useGeocodedOrderListings } from '../hooks/useGeocodedOrderListings';
 
-import 'leaflet/dist/leaflet.css';
-import { eBay, useAuth } from '../providers/AuthProvider';
 
 export const Home = () => {
 	const mapRef = useRef(null);
-	const { isAuthenticated } = useAuth();
+	const orderListings = useGeocodedOrderListings()
 
 	useEffect(() => {
 		if (!mapRef.current) {
@@ -29,14 +28,15 @@ export const Home = () => {
 		).addTo(map);
 	}, []);
 
+	/**
+	 * Renders all orders on the map.
+	 */
 	useEffect(() => {
-		if (isAuthenticated) {
-			console.log(eBay.sell.fulfillment);
-			eBay.sell.fulfillment.getOrders().then((res) => {
-				console.log(res);
-			});
-		}
-	}, [isAuthenticated]);
+		orderListings.forEach(listing => {
+			const marker = L.marker([listing.lat, listing.lng]).addTo(mapRef.current! as L.Map);
+			marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${listing.date.toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
+		})
+	}, [orderListings])
 
 	return (
 		<Box position="relative">

@@ -1,8 +1,8 @@
 import { Stack, Heading, Button, Checkbox } from '@chakra-ui/react';
-import { useAuth } from '../providers/AuthProvider';
+import { useEbay } from '../providers/EbayProvider';
 
 export const Navigation = () => {
-	const { isAuthenticated, login } = useAuth();
+	const { isAuthenticated, login } = useEbay();
 
 	return (
 		<Stack
