@@ -18,7 +18,7 @@ export const useOrders = () => useContext(OrderContext)
 export const OrderProvider: FC = ({ children }) => {
     const { hasInitiallyLoaded, orders } = useGeocodedOrderListings()
 
-    return <OrderContext.Provider value={{ orders, isLoading: hasInitiallyLoaded }}>
+    return <OrderContext.Provider value={{ orders, isLoading: !hasInitiallyLoaded }}>
         {children}
     </OrderContext.Provider>
 }
