@@ -13,6 +13,7 @@ export type OrderListing = {
 
 const getOrders = async (ebay: eBayApi, skip: number = 0) => {
     return await ebay.sell.fulfillment.getOrders({ limit: BATCH_SIZE, offset: skip }).then((res) => {
+        console.log(res.orders)
         const listings: OrderListing[] = res.orders.map((order: any) => ({
             postalCode: order.fulfillmentStartInstructions[0].finalDestinationAddress.postalCode,
             username: order.buyer.username,
