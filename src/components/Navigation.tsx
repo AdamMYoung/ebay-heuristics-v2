@@ -15,8 +15,7 @@ export const Navigation = () => {
 		>
 			<Heading size="md">eBay Heuristics V2</Heading>
 
-			{!isAuthenticated && <Button onClick={login}>Login to eBay</Button>}
-			{isAuthenticated && <Button disabled>Logged in</Button>}
+			<Button disabled={isAuthenticated} onClick={login}>{isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
 
 			<Stack>
 				<Heading size="md">Month Visibility</Heading>
