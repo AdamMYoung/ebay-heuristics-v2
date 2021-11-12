@@ -5,7 +5,7 @@ import { OrderListing, useOrderListings } from "./useOrderListings"
 
 const REQUEST_BATCH_SIZE = 100
 
-type GeocodedOrderListing = OrderListing & {
+export type GeocodedOrderListing = OrderListing & {
     lat: number
     lng: number
 }
