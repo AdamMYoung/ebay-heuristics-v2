@@ -4,20 +4,27 @@ import { useEbay } from "../providers/EbayProvider";
 
 const BATCH_SIZE = 200
 
+export type OrderItem = {
+    title: string;
+    cost: string;
+}
+
 export type OrderListing = {
     postalCode: string
     username: string
     date: Date
-    itemsOrdered: string[]
+    address: string
+    itemsOrdered: OrderItem[]
 }
 
 const getOrders = async (ebay: eBayApi, skip: number = 0) => {
     return await ebay.sell.fulfillment.getOrders({ limit: BATCH_SIZE, offset: skip }).then((res) => {
         const listings: OrderListing[] = res.orders.map((order: any) => ({
+            address: order.fulfillmentStartInstructions[0].shippingStep.shipTo.contactAddress.addressLine1,
             postalCode: order.fulfillmentStartInstructions[0].shippingStep.shipTo.contactAddress.postalCode,
             username: order.buyer.username,
             date: order.creationDate,
-            itemsOrdered: order.lineItems.map((item: any) => item.title)
+            itemsOrdered: order.lineItems.map((item: any) => ({ title: item.title, cost: item.lineItemCost.value }))
         }));
 
         return { hasMore: !!res.next, listings };

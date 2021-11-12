@@ -48,8 +48,8 @@ export const Home = () => {
 			const markers: L.Layer[] = []
 
 			orders.forEach(listing => {
-				const marker = (L as any).canvasMarker(L.latLng(listing.lat, listing.lng), { radius: 20, img: { url: markerIconPng } })
-				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${new Date(listing.date).toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
+				const marker = (L as any).canvasMarker(L.latLng(listing.lat, listing.lng), { radius: 12, img: { url: markerIconPng } })
+				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.address}</p><p>${listing.postalCode}</p><p>Order date: ${new Date(listing.date).toLocaleDateString()}</p><p>Ordered:</p>${listing.itemsOrdered.map(item => `<p>${item.cost} - ${item.title}</p>`)}`);
 				markers.push(marker)
 			})
 
