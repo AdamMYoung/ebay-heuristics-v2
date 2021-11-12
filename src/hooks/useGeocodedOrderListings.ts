@@ -10,7 +10,8 @@ export type GeocodedOrderListing = OrderListing & {
     lng: number
 }
 
-export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
+export const useGeocodedOrderListings = () => {
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = useState(false)
     const [geocodedOrderListings, setGeocodedOrderListings] = useState<GeocodedOrderListing[]>([])
     const orderListings = useOrderListings()
 
@@ -31,8 +32,10 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
 
                 setGeocodedOrderListings(existingOrders => [...existingOrders, ...mappedBatches])
             })
+
+            setHasInitiallyLoaded(true)
         }
     }, [orderListings, setGeocodedOrderListings])
 
-    return geocodedOrderListings
+    return { orders: geocodedOrderListings, hasInitiallyLoaded }
 }
