@@ -1,8 +1,9 @@
-import { Stack, Heading, Button, Text, Spinner, HStack } from '@chakra-ui/react';
+import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode } from '@chakra-ui/react';
 import { useEbay } from '../providers/EbayProvider';
 import { useOrders } from '../providers/OrderProvider';
 
 export const Navigation = () => {
+	const { colorMode } = useColorMode()
 	const { isAuthenticated, login } = useEbay();
 	const { isLoading, orders } = useOrders()
 
@@ -10,7 +11,7 @@ export const Navigation = () => {
 		<Stack
 			pointerEvents="auto"
 			spacing="4"
-			bg="gray.800"
+			bg={colorMode === "dark" ? "gray.800" : "white"}
 			p="4"
 			rounded="md"
 			shadow="md"
