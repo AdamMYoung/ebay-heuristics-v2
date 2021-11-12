@@ -1,5 +1,5 @@
 import eBayApi from "@hendt/ebay-api/lib";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useEbay } from "../providers/EbayProvider";
 
 const BATCH_SIZE = 200
@@ -28,7 +28,6 @@ export const useOrderListings = () => {
     const [orders, setOrders] = useState<OrderListing[]>();
     const { isAuthenticated, eBay } = useEbay();
 
-    //TODO Iterate through all pages, then transform data.
     useEffect(() => {
         const exec = async () => {
             if (isAuthenticated) {

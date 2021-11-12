@@ -14,7 +14,6 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
     const [geocodedOrderListings, setGeocodedOrderListings] = useState<GeocodedOrderListing[]>([])
     const orderListings = useOrderListings()
 
-    //TODO Geocode postal addresses of orders.
     useEffect(() => {
         if (orderListings && orderListings.length > 0) {
             const batches = chunk(orderListings, REQUEST_BATCH_SIZE)
@@ -36,6 +35,4 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
     }, [orderListings, setGeocodedOrderListings])
 
     return geocodedOrderListings
-
-
 }
