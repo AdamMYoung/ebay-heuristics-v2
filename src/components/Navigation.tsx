@@ -4,7 +4,7 @@ import { useOrders } from '../providers/OrderProvider';
 
 export const Navigation = () => {
 	const { isAuthenticated, login } = useEbay();
-	const { isLoading } = useOrders()
+	const { isLoading, orders } = useOrders()
 
 	return (
 		<Stack
@@ -20,6 +20,7 @@ export const Navigation = () => {
 			<Button disabled={isAuthenticated} onClick={login}>{!isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
 
 			{isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
+			{!isLoading && <Text>Loaded {orders.length} orders</Text>}
 		</Stack>
 	);
 };
