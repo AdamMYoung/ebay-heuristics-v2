@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 
 import { Navigation } from '../components';
-import { useGeocodedOrderListings } from '../hooks/useGeocodedOrderListings';
 import { useOrders } from '../providers/OrderProvider';
 
 
