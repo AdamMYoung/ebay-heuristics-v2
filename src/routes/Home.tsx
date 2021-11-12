@@ -1,6 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import * as L from 'leaflet';
 import { useEffect, useRef } from 'react';
+
+import 'leaflet/dist/leaflet.css';
+
 import { Navigation } from '../components';
 import { useGeocodedOrderListings } from '../hooks/useGeocodedOrderListings';
 
