@@ -16,15 +16,6 @@ export const Navigation = () => {
 			<Heading size="md">eBay Heuristics V2</Heading>
 
 			<Button disabled={isAuthenticated} onClick={login}>{isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
-
-			<Stack>
-				<Heading size="md">Month Visibility</Heading>
-				<Checkbox>January</Checkbox>
-				<Checkbox>February</Checkbox>
-				<Checkbox>March</Checkbox>
-				<Checkbox>April</Checkbox>
-				<Checkbox>May</Checkbox>
-			</Stack>
 		</Stack>
 	);
 };
