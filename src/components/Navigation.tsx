@@ -55,7 +55,7 @@ export const Navigation = () => {
 					<Divider />
 					<Text>Breakdown:</Text>
 					<VStack maxH="32" overflow="none" overflowY="auto">
-						{Object.keys(groupedItems).map(key => <Text>Sold {groupedItems[key]} of {key}</Text>)}
+						{Object.keys(groupedItems).map(key => <Text isTruncated>Sold <b>{groupedItems[key]}</b> of <b>{key}</b></Text>)}
 					</VStack>
 				</Stack>
 				<Button onClick={() => setHideDetails(visible => !visible)}>{hideDetails ? "Show" : "Hide"} details</Button>
