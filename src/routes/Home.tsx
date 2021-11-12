@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import 'leaflet/dist/leaflet.css';
-import "leaflet.markercluster/dist/MarkerCluster.css"
+import "leaflet-canvas-markers"
 
 import { Navigation } from '../components';
 import { useOrders } from '../providers/OrderProvider';
@@ -13,7 +13,7 @@ import { useOrders } from '../providers/OrderProvider';
 export const Home = () => {
 	const mapElRef = useRef(null);
 	const mapRef = useRef<L.Map>()
-	const markerRef = useRef<L.Layer>()
+	const markerRef = useRef<L.Layer[]>()
 	const { orders, isLoading } = useOrders()
 
 	useEffect(() => {
@@ -42,17 +42,18 @@ export const Home = () => {
 	 */
 	useEffect(() => {
 		if (!isLoading) {
+			(markerRef.current as L.Layer[]).forEach(marker => mapRef.current!.removeLayer(marker))
 
-			mapRef.current!.removeLayer(markerRef.current as L.Layer)
-			const group = (L as any).markerClusterGroup()
+			const markers: L.Layer[] = []
+
 			orders.forEach(listing => {
-				const marker = L.marker([listing.lat, listing.lng], { icon: new L.Icon({ iconUrl: markerIconPng }) })
+				const marker = (L as any).canvasMarker(L.latLng(listing.lat, listing.lng), { radius: 20, img: { url: markerIconPng } })
 				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${new Date(listing.date).toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
-				group.addLayer(marker)
+				markers.push(marker)
 			})
 
-			markerRef.current = group
-			mapRef.current!.addLayer(group)
+			markerRef.current = markers
+			markers.forEach(marker => marker.addTo(mapRef.current!))
 		}
 	}, [orders, isLoading])
 
