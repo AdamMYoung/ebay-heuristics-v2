@@ -20,7 +20,7 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
 
             batches.forEach(async batch => {
                 const postcodes = batch.map(orderListing => orderListing.postalCode)
-                const geoCodedPostcode = await axios.post(`https://api.postcodes.io/postcodes`, { postcodes: postcodes.join(",") })
+                const geoCodedPostcode = await axios.post(`https://api.postcodes.io/postcodes`, { postcodes })
                     .then(res => res.data.result)
 
                 const mappedBatches = batch.map((entry, index) => ({
