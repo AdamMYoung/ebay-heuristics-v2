@@ -1,5 +1,5 @@
-import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode, Divider, VStack } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import { Stack, Heading, Button, Text, Spinner, HStack, useColorMode } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import { useEbay } from '../providers/EbayProvider';
 import { useOrders } from '../providers/OrderProvider';
@@ -11,26 +11,6 @@ export const Navigation = () => {
 	const { isLoading, orders } = useOrders()
 
 	const amountEarned = orders.reduce((acc, order) => acc + order.itemsOrdered.reduce((list, item) => list + parseFloat(item.cost), 0), 0)
-
-	const itemsSold = useMemo(() => orders.reduce<string[]>((acc, order) => {
-		const items = order.itemsOrdered.map(i => i.title)
-
-		acc.push(...items)
-		return acc
-	}, []), [orders])
-
-	const groupedItems = useMemo(() => {
-		return itemsSold.reduce((prev, item) => {
-			if (item in prev) {
-				prev[item]++;
-			}
-			else {
-				prev[item] = 1;
-			}
-			return prev;
-		}, {} as { [key: string]: number })
-	}, [itemsSold])
-
 
 	return (
 		<Stack
@@ -52,11 +32,6 @@ export const Navigation = () => {
 					<Text>Over the past 90 days, you have:</Text>
 					<Text>Had <b>{orders.length}</b> orders</Text>
 					<Text>Earned <b>£{amountEarned}</b></Text>
-					<Divider />
-					<Text>Breakdown:</Text>
-					<VStack maxH="32" overflow="none" overflowY="auto">
-						{Object.keys(groupedItems).map(key => <Text isTruncated>Sold <b>{groupedItems[key]}</b> of <b>{key}</b></Text>)}
-					</VStack>
 				</Stack>
 				<Button onClick={() => setHideDetails(visible => !visible)}>{hideDetails ? "Show" : "Hide"} details</Button>
 			</>}
