@@ -2,7 +2,9 @@ import { Box } from '@chakra-ui/react';
 import * as L from 'leaflet';
 import { useEffect, useRef } from 'react';
 
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import 'leaflet/dist/leaflet.css';
+import "leaflet.markercluster/dist/MarkerCluster.css"
 
 import { Navigation } from '../components';
 import { useOrders } from '../providers/OrderProvider';
@@ -11,6 +13,7 @@ import { useOrders } from '../providers/OrderProvider';
 export const Home = () => {
 	const mapElRef = useRef(null);
 	const mapRef = useRef<L.Map>()
+	const markerRef = useRef<L.Layer>()
 	const { orders, isLoading } = useOrders()
 
 	useEffect(() => {
@@ -39,10 +42,17 @@ export const Home = () => {
 	 */
 	useEffect(() => {
 		if (!isLoading) {
+
+			mapRef.current!.removeLayer(markerRef.current as L.Layer)
+			const group = (L as any).markerClusterGroup()
 			orders.forEach(listing => {
-				const marker = L.marker([listing.lat, listing.lng]).addTo(mapRef.current! as L.Map);
+				const marker = L.marker([listing.lat, listing.lng], { icon: new L.Icon({ iconUrl: markerIconPng }) })
 				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${new Date(listing.date).toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
+				group.addLayer(marker)
 			})
+
+			markerRef.current = group
+			mapRef.current!.addLayer(group)
 		}
 	}, [orders, isLoading])
 
