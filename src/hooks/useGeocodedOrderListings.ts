@@ -13,7 +13,7 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
 
     //TODO Geocode postal addresses of orders.
     useEffect(() => {
-
+        console.log(orderListings)
     }, [orderListings])
 
     return geocodedOrderListings
