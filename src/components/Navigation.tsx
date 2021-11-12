@@ -20,8 +20,10 @@ export const Navigation = () => {
 
 			<Button disabled={isAuthenticated} onClick={login}>{!isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
 
-			{isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
-			{!isLoading && <Text>Loaded {orders.length} orders</Text>}
+			{isAuthenticated && isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
+			{isAuthenticated && !isLoading && <Text>Loaded {orders.length} orders</Text>}
+
+
 		</Stack>
 	);
 };

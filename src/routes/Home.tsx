@@ -9,15 +9,16 @@ import { useOrders } from '../providers/OrderProvider';
 
 
 export const Home = () => {
-	const mapRef = useRef(null);
+	const mapElRef = useRef(null);
+	const mapRef = useRef<L.Map>()
 	const { orders, isLoading } = useOrders()
 
 	useEffect(() => {
-		if (!mapRef.current) {
+		if (!mapElRef.current) {
 			return;
 		}
 
-		const map = L.map(mapRef.current, {
+		const map = L.map(mapElRef.current, {
 			center: [51.505, -0.09],
 			zoom: 13
 		});
@@ -29,6 +30,8 @@ export const Home = () => {
 					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}
 		).addTo(map);
+
+		mapRef.current = map
 	}, []);
 
 	/**
@@ -45,7 +48,7 @@ export const Home = () => {
 
 	return (
 		<Box position="relative">
-			<Box w="full" h="100vh" ref={mapRef} />
+			<Box w="full" h="100vh" ref={mapElRef} />
 			<Box
 				position="absolute"
 				zIndex="10000"
