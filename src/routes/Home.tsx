@@ -22,6 +22,7 @@ export const Home = () => {
 		}
 
 		const map = L.map(mapElRef.current, {
+			preferCanvas: true,
 			center: [51.505, -0.09],
 			zoom: 13
 		});
