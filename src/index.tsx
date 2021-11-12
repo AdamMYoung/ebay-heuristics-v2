@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Routes } from './routes/Routes';
-import AuthProvider from './providers/AuthProvider';
+import EbayProvider from './providers/EbayProvider';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
@@ -26,9 +26,9 @@ ReactDOM.render(
 		<BrowserRouter>
 			<QueryClientProvider client={queryClient}>
 				<ChakraProvider>
-					<AuthProvider>
+					<EbayProvider>
 						<Routes />
-					</AuthProvider>
+					</EbayProvider>
 				</ChakraProvider>
 			</QueryClientProvider>
 		</BrowserRouter>
