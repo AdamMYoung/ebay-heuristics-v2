@@ -1,8 +1,10 @@
-import { Stack, Heading, Button } from '@chakra-ui/react';
+import { Stack, Heading, Button, Text, Spinner, HStack } from '@chakra-ui/react';
 import { useEbay } from '../providers/EbayProvider';
+import { useOrders } from '../providers/OrderProvider';
 
 export const Navigation = () => {
 	const { isAuthenticated, login } = useEbay();
+	const { isLoading } = useOrders()
 
 	return (
 		<Stack
@@ -16,6 +18,8 @@ export const Navigation = () => {
 			<Heading size="md">eBay Heuristics V2</Heading>
 
 			<Button disabled={isAuthenticated} onClick={login}>{!isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
+
+			{isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
 		</Stack>
 	);
 };

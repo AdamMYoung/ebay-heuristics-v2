@@ -6,11 +6,12 @@ import 'leaflet/dist/leaflet.css';
 
 import { Navigation } from '../components';
 import { useGeocodedOrderListings } from '../hooks/useGeocodedOrderListings';
+import { useOrders } from '../providers/OrderProvider';
 
 
 export const Home = () => {
 	const mapRef = useRef(null);
-	const orderListings = useGeocodedOrderListings()
+	const { orders, isLoading } = useOrders()
 
 	useEffect(() => {
 		if (!mapRef.current) {
@@ -35,11 +36,13 @@ export const Home = () => {
 	 * Renders all orders on the map.
 	 */
 	useEffect(() => {
-		orderListings.forEach(listing => {
-			const marker = L.marker([listing.lat, listing.lng]).addTo(mapRef.current! as L.Map);
-			marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${listing.date.toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
-		})
-	}, [orderListings])
+		if (!isLoading) {
+			orders.forEach(listing => {
+				const marker = L.marker([listing.lat, listing.lng]).addTo(mapRef.current! as L.Map);
+				marker.bindPopup(`<h3>${listing.username}</h3><p>${listing.postalCode}</p><p>Order date: ${listing.date.toLocaleDateString()}</p></br><p>Ordered:</p><ul>${listing.itemsOrdered.map(item => `<li>${item}</li>`)}</ul>`);
+			})
+		}
+	}, [orders, isLoading])
 
 	return (
 		<Box position="relative">

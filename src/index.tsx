@@ -2,13 +2,16 @@ import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Routes } from './routes/Routes';
 import EbayProvider from './providers/EbayProvider';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
-import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { OrderProvider } from './providers/OrderProvider';
+import theme from './theme';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -25,9 +28,11 @@ ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<QueryClientProvider client={queryClient}>
-				<ChakraProvider>
+				<ChakraProvider theme={theme}>
 					<EbayProvider>
-						<Routes />
+						<OrderProvider>
+							<Routes />
+						</OrderProvider>
 					</EbayProvider>
 				</ChakraProvider>
 			</QueryClientProvider>
