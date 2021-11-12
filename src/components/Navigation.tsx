@@ -46,18 +46,20 @@ export const Navigation = () => {
 			<Button disabled={isAuthenticated} onClick={login}>{!isAuthenticated ? "Login to eBay" : "Logged in"}</Button>
 
 			{isAuthenticated && isLoading && <HStack><Spinner /><Text>Loading order data...</Text></HStack>}
-			{!hideDetails && isAuthenticated && !isLoading && <Stack spacing="2">
-				<Heading size="md" fontWeight="bold">Stats</Heading>
-				<Text>Over the past 90 days, you have:</Text>
-				<Text>Had <b>{orders.length}</b> orders</Text>
-				<Text>Earned <b>£${amountEarned}</b></Text>
-				<Divider />
-				<Text>Breakdown:</Text>
-				<Box maxH="64" overflow="none" overflowY="auto">
-					{Object.keys(groupedItems).map(key => <Text>Sold ${groupedItems[key]} of ${key}</Text>)}
-				</Box>
-			</Stack>}
-			<Button onClick={() => setHideDetails(visible => !visible)}>{hideDetails ? "Show" : "Hide"} details</Button>
+			{!hideDetails && isAuthenticated && !isLoading && <>
+				<Stack spacing="2">
+					<Heading size="md" fontWeight="bold">Stats</Heading>
+					<Text>Over the past 90 days, you have:</Text>
+					<Text>Had <b>{orders.length}</b> orders</Text>
+					<Text>Earned <b>£${amountEarned}</b></Text>
+					<Divider />
+					<Text>Breakdown:</Text>
+					<Box maxH="64" overflow="none" overflowY="auto">
+						{Object.keys(groupedItems).map(key => <Text>Sold ${groupedItems[key]} of ${key}</Text>)}
+					</Box>
+				</Stack>
+				<Button onClick={() => setHideDetails(visible => !visible)}>{hideDetails ? "Show" : "Hide"} details</Button>
+			</>}
 		</Stack>
 	);
 };
