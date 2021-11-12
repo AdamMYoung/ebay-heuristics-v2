@@ -24,7 +24,7 @@ const getOrders = async (ebay: eBayApi, skip: number = 0) => {
             postalCode: order.fulfillmentStartInstructions[0].shippingStep.shipTo.contactAddress.postalCode,
             username: order.buyer.username,
             date: order.creationDate,
-            itemsOrdered: order.lineItems.map((item: any) => ({ title: item.title, cost: item.appliedPromotions.length > 0 ? item.appliedPromotions.discountAmount.value : item.lineItemCost.value }))
+            itemsOrdered: order.lineItems.map((item: any) => ({ title: item.title, cost: item.appliedPromotions.length > 0 ? item.appliedPromotions[0].discountAmount.value : item.lineItemCost.value }))
         }));
 
         return { hasMore: !!res.next, listings };
