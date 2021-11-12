@@ -25,8 +25,8 @@ export const useGeocodedOrderListings = (): GeocodedOrderListing[] => {
 
                 const mappedBatches = batch.map((entry, index) => ({
                     ...entry,
-                    lat: geoCodedPostcode[index].result.latitude,
-                    lng: geoCodedPostcode[index].result.longitude
+                    lat: geoCodedPostcode[index].result?.latitude ?? 0,
+                    lng: geoCodedPostcode[index].result?.longitude ?? 0
                 }))
 
                 setGeocodedOrderListings(existingOrders => [...existingOrders, ...mappedBatches])
