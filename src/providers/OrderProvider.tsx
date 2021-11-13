@@ -5,20 +5,20 @@ import { GeocodedOrderListing, useGeocodedOrderListings } from "../hooks/useGeoc
 
 type OrderContextOptions = {
     orders: GeocodedOrderListing[]
-    isLoading: boolean
+    isLoaded: boolean
 }
 
 const OrderContext = React.createContext<OrderContextOptions>({
     orders: [],
-    isLoading: true
+    isLoaded: false
 })
 
 export const useOrders = () => useContext(OrderContext)
 
 export const OrderProvider: FC = ({ children }) => {
-    const { hasInitiallyLoaded, orders } = useGeocodedOrderListings()
+    const { isLoaded, orders } = useGeocodedOrderListings()
 
-    return <OrderContext.Provider value={{ orders, isLoading: !hasInitiallyLoaded }}>
+    return <OrderContext.Provider value={{ orders, isLoaded }}>
         {children}
     </OrderContext.Provider>
 }

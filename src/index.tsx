@@ -10,8 +10,8 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css';
 
-import { OrderProvider } from './providers/OrderProvider';
 import theme from './theme';
+import { OrderProvider } from './providers/OrderProvider';
 
 const queryClient = new QueryClient({
 	defaultOptions: {

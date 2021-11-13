@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { chunk } from "../utils/array"
 import { OrderListing, useOrderListings } from "./useOrderListings"
 
@@ -11,7 +11,6 @@ export type GeocodedOrderListing = OrderListing & {
 }
 
 export const useGeocodedOrderListings = () => {
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = useState(false)
     const [geocodedOrderListings, setGeocodedOrderListings] = useState<GeocodedOrderListing[]>([])
     const orderListings = useOrderListings()
 
@@ -32,10 +31,10 @@ export const useGeocodedOrderListings = () => {
 
                 setGeocodedOrderListings(existingOrders => [...existingOrders, ...mappedBatches])
             })
-
-            setHasInitiallyLoaded(true)
         }
     }, [orderListings, setGeocodedOrderListings])
 
-    return { orders: geocodedOrderListings, hasInitiallyLoaded }
+    const isLoaded = useMemo(() => geocodedOrderListings.length === orderListings?.length, [geocodedOrderListings, orderListings])
+
+    return { orders: geocodedOrderListings, isLoaded }
 }

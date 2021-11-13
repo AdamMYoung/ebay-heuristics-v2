@@ -1,62 +1,31 @@
 import { Box } from '@chakra-ui/react';
 import * as L from 'leaflet';
 import { useEffect, useRef } from 'react';
-
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import 'leaflet/dist/leaflet.css';
-import "leaflet-canvas-markers"
+
 
 import { Navigation } from '../components';
-import { useOrders } from '../providers/OrderProvider';
-
+import { useMapData } from '../hooks/useMapData';
 
 export const Home = () => {
 	const mapElRef = useRef(null);
-	const mapRef = useRef<L.Map>()
-	const markerRef = useRef<L.Layer[]>()
-	const { orders, isLoading } = useOrders()
+
+
+	const { map, setMap } = useMapData()
 
 	useEffect(() => {
-		if (!mapElRef.current) {
+		if (!mapElRef.current || map) {
 			return;
 		}
 
-		const map = L.map(mapElRef.current, {
+		const mapInstance = L.map(mapElRef.current!, {
 			preferCanvas: true,
 			center: [51.505, -0.09],
 			zoom: 13
 		});
 
-		L.tileLayer(
-			'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
-			{
-				attribution:
-					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-			}
-		).addTo(map);
-
-		mapRef.current = map
-	}, []);
-
-	/**
-	 * Renders all orders on the map.
-	 */
-	useEffect(() => {
-		if (!isLoading) {
-			(markerRef.current as L.Layer[])?.forEach(marker => mapRef.current!.removeLayer(marker))
-
-			const markers: L.Layer[] = []
-
-			orders.forEach(listing => {
-				const marker = (L as any).canvasMarker(L.latLng(listing.lat, listing.lng), { radius: 12, img: { url: markerIconPng } })
-				marker.bindPopup(`<h3>${listing.username}</h3><h3>Address:</h3><p>${listing.address}, ${listing.postalCode}</p><h3>Order date:</h3><p>${new Date(listing.date).toLocaleDateString()}</p><h3>Ordered:</h3>${listing.itemsOrdered.map(item => `<p>£${item.cost} - ${item.title}</p>`)}`);
-				markers.push(marker)
-			})
-
-			markerRef.current = markers
-			markers.forEach(marker => marker.addTo(mapRef.current!))
-		}
-	}, [orders, isLoading])
+		setMap(mapInstance)
+	}, [setMap, map]);
 
 	return (
 		<Box position="relative">

@@ -7800,6 +7800,11 @@ leaflet-canvas-markers@^1.0.7:
   resolved "https://registry.npmjs.org/leaflet-canvas-markers/-/leaflet-canvas-markers-1.0.7.tgz"
   integrity sha512-A2XQLTsIWA45MT7Q1w0JscHkabHJaWmw4+8YV9E6wg9lomUwT26yJQSjVaRxPs9seQ0YExufUS50WHU41oNKJw==
 
+leaflet.heat@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet.heat/-/leaflet.heat-0.2.0.tgz#109d8cf586f0adee41f05aff031e27a77fecc229"
+  integrity sha1-EJ2M9Ybwre5B8Fr/Ax4np3/swik=
+
 leaflet@^1.7.1:
   version "1.7.1"
   resolved "https://registry.npmjs.org/leaflet/-/leaflet-1.7.1.tgz"
